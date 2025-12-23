@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.luizmendes.senhaguard"
     },
     "android": {
       "adaptiveIcon": {
@@ -19,11 +20,13 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.luizmendes.senhaguard"
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "bundler": "metro"
     },
     "plugins": [
       "expo-router",
@@ -38,8 +41,24 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
+    "extra": {
+      "firebase": {
+        "apiKey": "AIzaSyCjzbDfVXqur4U6MMIgEziqQpukfTFPAk0",
+        "authDomain": "senhaguard-e3915.firebaseapp.com",
+        "projectId": "senhaguard-e3915",
+        "storageBucket": "senhaguard-e3915.firebasestorage.app",
+        "messagingSenderId": "963924703334",
+        "appId": "1:963924703334:web:311cc0767f0d79fe1a55a7",
+        "measurementId": "G-ENTPQ6XBPV"
+      },
+      "router": {},
+      "eas": {
+        "projectId": "d70df851-9c1d-4afb-81d1-c6d494649c01"
+      }
+    },
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
