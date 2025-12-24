@@ -1,5 +1,5 @@
 import { Header } from "@/src/components/header";
-import { removePassword, startRealtimeSync, usePasswords } from "@/src/lib/passwords";
+import { removePassword, usePasswords } from "@/src/lib/passwords-realm";
 import { Ionicons } from "@expo/vector-icons";
 import { Href, Link, useRouter } from "expo-router";
 import * as React from "react";
@@ -11,10 +11,7 @@ export default function SenhasScreen() {
   const passwords = usePasswords();
   const [showMap, setShowMap] = React.useState<Record<string, boolean>>({});
 
-  React.useEffect(() => {
-    const unsub = startRealtimeSync();
-    return () => unsub();
-  }, []);
+
 
   return (
     <SafeAreaView className="flex-1 bg-slate-950">

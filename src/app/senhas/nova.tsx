@@ -1,10 +1,12 @@
 import { Header } from "@/src/components/header";
+import { addPassword, getPasswordById, updatePassword } from "@/src/lib/passwords-realm";
 import { Ionicons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import * as React from "react";
 import { Alert, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Realm from "realm";
 
 export default function NovaSenhaScreen() {
   const router = useRouter();
@@ -15,18 +17,16 @@ export default function NovaSenhaScreen() {
   const [senha, setSenha] = React.useState("");
   const [showSenha, setShowSenha] = React.useState(false);
   const [saving, setSaving] = React.useState(false);
-  const { addPassword, getPasswords } = require("@/src/lib/passwords");
-
   React.useEffect(() => {
-    // Pré-carrega dados se estiver editando
     if (editingId) {
-      const { getPasswordById } = require("@/src/lib/passwords");
-      const current = getPasswordById(editingId);
-      if (current) {
-        setNome(current.titulo ?? "");
-        setLogin(current.usuario ?? "");
-        setSenha(current.senha ?? "");
-      }
+      try {
+        const current = getPasswordById(new Realm.BSON.ObjectId(editingId));
+        if (current) {
+          setNome(current.titulo ?? "");
+          setLogin(current.usuario ?? "");
+          setSenha(current.senha ?? "");
+        }
+      } catch {}
     }
   }, [editingId]);
 
@@ -41,22 +41,18 @@ export default function NovaSenhaScreen() {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
       if (editingId) {
-        const { updatePassword } = require("@/src/lib/passwords");
-        updatePassword(editingId, {
+        updatePassword(new Realm.BSON.ObjectId(editingId), {
           titulo: nome.trim(),
           usuario: login.trim(),
           senha,
         });
       } else {
-        const item = {
-          id: String(Date.now()),
+        addPassword({
           titulo: nome.trim(),
           usuario: login.trim(),
-          senha, // em produção recomenda-se criptografia adicional
-        };
-        addPassword(item);
+          senha,
+        });
       }
-      // Firestore sync atualizará a listagem; persistência local opcional removida
 
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       Alert.alert("Sucesso", "Senha cadastrada com sucesso!", [
