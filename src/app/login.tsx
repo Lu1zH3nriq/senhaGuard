@@ -1,1 +1,3 @@
-// Arquivo removido: tela de login não é mais necessária.
+export default function LoginScreen() {
+  return null;
+}

@@ -23,7 +23,7 @@ export default function SenhasScreen() {
 
       <FlatList
         data={passwords}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id.toString()}
         contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 12, gap: 12 }}
         ItemSeparatorComponent={() => <View className="h-2" />}
         renderItem={({ item }) => (
@@ -36,7 +36,7 @@ export default function SenhasScreen() {
                   accessibilityLabel={showMap[item.id] ? "Ocultar senha" : "Mostrar senha"}
                   hitSlop={10}
                   className="h-8 w-8 items-center justify-center rounded-md bg-slate-800"
-                  onPress={() => setShowMap((m) => ({ ...m, [item.id]: !m[item.id] }))}
+                  onPress={() => setShowMap((m) => ({ ...m, [item._id.toString()]: !m[item._id.toString()] }))}
                 >
                   <Ionicons name={showMap[item.id] ? "eye-off" : "eye"} size={16} color="#e2e8f0" />
                 </Pressable>
@@ -45,7 +45,7 @@ export default function SenhasScreen() {
                   accessibilityLabel="Editar senha"
                   hitSlop={10}
                   className="h-8 w-8 items-center justify-center rounded-md bg-slate-800"
-                  onPress={() => router.push({ pathname: "/senhas/nova", params: { id: item.id } } as Href)}
+                  onPress={() => router.push({ pathname: "/senhas/nova", params: { id: item._id.toString() } } as Href)}
                 >
                   <Ionicons name="pencil" size={16} color="#e2e8f0" />
                 </Pressable>
@@ -64,8 +64,8 @@ export default function SenhasScreen() {
                         {
                           text: "Excluir",
                           style: "destructive",
-                          onPress: async () => {
-                            await removePassword(item.id);
+                          onPress: () => {
+                            removePassword(item._id as any);
                           },
                         },
                       ]
@@ -79,7 +79,7 @@ export default function SenhasScreen() {
             <Text className="text-sm text-slate-300">{item.usuario}</Text>
             {item.senha ? (
               <Text className="text-sm text-slate-300">
-                {showMap[item.id] ? item.senha : "••••••••"}
+                {showMap[item._id.toString()] ? item.senha : "••••••••"}
               </Text>
             ) : null}
             {item.url ? (

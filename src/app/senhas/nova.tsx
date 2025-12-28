@@ -19,14 +19,13 @@ export default function NovaSenhaScreen() {
   const [saving, setSaving] = React.useState(false);
   React.useEffect(() => {
     if (editingId) {
-      try {
-        const current = getPasswordById(new Realm.BSON.ObjectId(editingId));
+      getPasswordById(new Realm.BSON.ObjectId(editingId)).then((current) => {
         if (current) {
           setNome(current.titulo ?? "");
           setLogin(current.usuario ?? "");
           setSenha(current.senha ?? "");
         }
-      } catch {}
+      }).catch(() => {});
     }
   }, [editingId]);
 
@@ -41,13 +40,13 @@ export default function NovaSenhaScreen() {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
       if (editingId) {
-        updatePassword(new Realm.BSON.ObjectId(editingId), {
+        await updatePassword(new Realm.BSON.ObjectId(editingId), {
           titulo: nome.trim(),
           usuario: login.trim(),
           senha,
         });
       } else {
-        addPassword({
+        await addPassword({
           titulo: nome.trim(),
           usuario: login.trim(),
           senha,

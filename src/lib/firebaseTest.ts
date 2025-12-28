@@ -1,5 +1,5 @@
-import { db } from "@/src/lib/firebase";
-import { addDoc, collection, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
+
+// Arquivo removido: Firebase não é mais utilizado. Toda a lógica foi migrada para Realm local.
 
 export async function testFirestoreConnection(): Promise<{ ok: boolean; error?: string }> {
   try {

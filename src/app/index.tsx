@@ -1,7 +1,6 @@
-import { testFirestoreConnection } from "@/src/lib/firebaseTest";
 import { Href, Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Alert, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Index() {
@@ -19,23 +18,6 @@ export default function Index() {
         >
           <Text className="text-center text-lg font-semibold text-white">Entrar</Text>
         </Link>
-
-        <View className="mt-4 w-full max-w-xs">
-          <Text
-            accessibilityRole="button"
-            onPress={async () => {
-              const res = await testFirestoreConnection();
-              if (res.ok) {
-                Alert.alert("Firebase", "Conexão OK: Firestore acessível");
-              } else {
-                Alert.alert("Firebase", `Falha na conexão: ${res.error}`);
-              }
-            }}
-            className="rounded-full border border-slate-700 bg-slate-800 px-6 py-4 text-center text-white"
-          >
-            Testar conexão Firebase
-          </Text>
-        </View>
       </View>
     </SafeAreaView>
   );
